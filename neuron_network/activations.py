@@ -1,13 +1,23 @@
 import numpy as np
+from scipy.special import expit  # dokładna implementacja sigmoida
 
+
+# Sigmoid: 1 / (1 + exp(-x))
 def sigmoid(x):
-    pass
+    return expit(x)
 
+
+# Pochodna sigmoida: σ(x) * (1 - σ(x))
 def sigmoid_derivative(x):
-    pass
+    s = expit(x)
+    return s * (1 - s)
 
+
+# Tanh: wbudowana w numpy
 def tanh(x):
-    pass
+    return np.tanh(x)
 
+
+# Pochodna tanh: 1 - tanh^2(x)
 def tanh_derivative(x):
-    pass
+    return 1 - np.tanh(x) ** 2

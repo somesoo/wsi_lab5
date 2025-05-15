@@ -4,6 +4,7 @@ from neuron_network.mlp import MLP
 from neuron_network.optimizer import SGD
 from neuron_network.loss import mse
 
+
 def main():
     # Tutaj będzie logika trenowania i porównania modeli
     # wygeneruj dane
@@ -12,6 +13,6 @@ def main():
     # narysuj wykres
     pass
 
+
 if __name__ == "__main__":
     main()
-
