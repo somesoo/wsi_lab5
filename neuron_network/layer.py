@@ -15,6 +15,9 @@ class Layer:
         elif activation == "tanh":
             self.activation = tanh
             self.activation_derivative = tanh_derivative
+        elif activation == "none":
+            self.activation = lambda x: x
+            self.activation_derivative = lambda x: 1
         else:
             raise ValueError("Unsupported activation function")
 
@@ -35,6 +38,8 @@ class Layer:
 
         self.dweights = dw
         self.dbiases = db
+#        print("dz mean:", np.mean(np.abs(dz)))
+#        print("dw mean:", np.mean(np.abs(dw)))
 
         return np.dot(self.weights.T, dz)
 

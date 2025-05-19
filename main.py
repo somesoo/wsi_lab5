@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 def main():
     np.random.seed(CONFIG["seed"])
     X, y = generate_data(CONFIG["n_samples"], CONFIG["range"], CONFIG["seed"])
-    X = X.reshape(1, -1) / 10
+    X = X.reshape(1, -1)
     y = y.reshape(1, -1)
     layer_sizes = [1] + CONFIG["hidden_layers"] + [1]
     model = MLP(layer_sizes, activation=CONFIG["activation"])
@@ -26,6 +26,11 @@ def main():
     x_vals = X.flatten()
     true_vals = y.flatten()
     pred_vals = y_pred.flatten()
+
+    sorted_idx = np.argsort(x_vals)
+    x_vals = x_vals[sorted_idx]
+    true_vals = true_vals[sorted_idx]
+    pred_vals = pred_vals[sorted_idx]
 
     plt.figure(figsize=(10, 5))
     plt.plot(x_vals, true_vals, label="f(x) – funkcja rzeczywista", color="black")

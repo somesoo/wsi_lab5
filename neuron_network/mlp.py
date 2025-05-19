@@ -6,7 +6,11 @@ class MLP:
     def __init__(self, layer_sizes, activation="sigmoid"):
         self.layers = []
         for i in range(len(layer_sizes) - 1):
-            self.layers.append(Layer(layer_sizes[i], layer_sizes[i + 1], activation))
+            if i == len(layer_sizes) - 2:
+                act = "none"  # ostatnia warstwa bez aktywacji
+            else:
+                act = activation
+            self.layers.append(Layer(layer_sizes[i], layer_sizes[i + 1], act))
 
     def forward(self, x):
         output = x
