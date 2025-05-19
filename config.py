@@ -1,8 +1,8 @@
 CONFIG = {
-    "epochs": 1000,
-    "learning_rate": 0.01,
-    "hidden_layers": [10, 10],
-    "activation": "sigmoid",
+    "epochs": 10000,
+    "learning_rate": 0.5,
+    "hidden_layers": [90, 20],
+    "activation": "tanh",
     "n_samples": 1000,
     "range": (-10, 10),
     "seed": 42,

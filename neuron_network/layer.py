@@ -26,15 +26,15 @@ class Layer:
         return self.a
 
 
-    def backward(self, output_gradient, learning_rate):
+    def backward(self, output_gradient):
         activation_grad = self.activation_derivative(self.z)  # dσ/dz
         dz = output_gradient * activation_grad  # dL/dz
 
         dw = np.dot(dz, self.input.T) / self.input.shape[1] # dL/dW
         db = np.mean(dz, axis=1, keepdims=True)       # dL/db
 
-        self.weights -= learning_rate * dw
-        self.biases -= learning_rate * db
+        self.dweights = dw
+        self.dbiases = db
 
         return np.dot(self.weights.T, dz)
 

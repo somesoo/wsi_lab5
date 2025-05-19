@@ -14,23 +14,18 @@ class MLP:
             output = layer.forward(output)
         return output
 
-    def backward(self, loss_gradient, learning_rate):
+    def backward(self, loss_gradient):
         grad = loss_gradient
         for layer in reversed(self.layers):
-            grad = layer.backward(grad, learning_rate)
+            grad = layer.backward(grad)
 
-    def train(self, X, y, epochs, learning_rate):
+    def train(self, X, y, epochs, optimizer):
         for epoch in range(epochs):
-            # Forward
             output = self.forward(X)
-
-            # Loss
             loss = mse(y, output)
-
-            # Backward
             grad = mse_derivative(y, output)
-            self.backward(grad, learning_rate)
-
+            self.backward(grad)
+            optimizer.step(self.layers)
             # Można wypisać co jakiś czas:
             if epoch % 100 == 0 or epoch == epochs - 1:
                 print(f"Epoch {epoch+1}/{epochs} | Loss: {loss:.5f}")
