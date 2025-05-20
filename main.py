@@ -48,9 +48,9 @@ def main():
 
     # === MODELE DO PORÓWNANIA ===
     y_poly, loss_poly = run_regression_baseline(X, y)
-    model_adam = copy.deepcopy(model_sgd)
 #    model_adam = MLP(layer_sizes, activation=CONFIG["activation"])
     optimizer_adam = AdamBackprop()
+    model_adam = MLP(layer_sizes, activation=CONFIG["activation"])
     model_adam.train(X, y, epochs=(CONFIG["epochs"] // 5 ), optimizer=optimizer_adam)
     y_pred_adam = model_adam.predict(X)
     loss_adam = mse(y, y_pred_adam)
