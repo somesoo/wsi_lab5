@@ -7,9 +7,9 @@ from neuron_network.optimizer import SGD
 from neuron_network.loss import mse, mse_derivative
 
 def optimize_architecture():
-    learning_rates = [0.7]
-    neuron_counts = [100, 20]
-    layer_counts = [1, 3]
+    learning_rates = [0.1, 0.3, 0.5, 0.7, 0.9]
+    neuron_counts = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    layer_counts = [1, 2, 3, 4, 5]
 
 
     results = []
@@ -29,24 +29,26 @@ def optimize_architecture():
                 model = MLP([1] + hidden_layers + [1], activation="tanh")
                 optimizer = SGD(learning_rate=lr)
                 epochs = 20000
-                start = time.time()
-                for epoch in range(epochs):  # ustalona liczba epok
-                    y_pred = model.forward(X)
-                    loss = mse(y, y_pred)
-                    grad = mse_derivative(y, y_pred)
-                    model.backward(grad)
-                    optimizer.step(model.layers)
-                end = time.time()
+                for epo in range(500, epochs, 500):
+                    start = time.time()
+                    for epoch in range(epo):  # ustalona liczba epok
+                        y_pred = model.forward(X)
+                        loss = mse(y, y_pred)
+                        grad = mse_derivative(y, y_pred)
+                        model.backward(grad)
+                        optimizer.step(model.layers)
+                    end = time.time()
 
-                results.append({
-                    "learning_rate": lr,
-                    "layers": num_layers,
-                    "neurons": neurons,
-                    "loss": loss,
-                    "time": end - start
-                })
+                    results.append({
+                        "epoch": epo,
+                        "learning_rate": lr,
+                        "layers": num_layers,
+                        "neurons": neurons,
+                        "loss": loss,
+                        "time": end - start
+                    })
 
-                print(f"{num_layers} warstw × {neurons} neurony | LR={lr:.2f} -> Loss={loss:.4f}, Time={end-start:.2f}s")
+                    print(f"{num_layers} warstw × {neurons} neurony | LR={lr:.2f} -> Loss={loss:.4f}, Time={end-start:.2f}s")
 
     # Sortowanie: najpierw jakość, potem czas
     best = sorted(results, key=lambda x: (x["loss"], x["time"]))[0]
