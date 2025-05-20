@@ -46,7 +46,7 @@ def optimize_architecture():
                             "loss": loss,
                             "time": end - start
                             })
-                        print(f"{epoch} epok, {num_layers} warstw × {neurons} neurony | LR={lr:.2f} -> Loss={loss:.4f}, Time={end-start:.2f}s")
+                        print(f"{epoch},{num_layers},{neurons},{lr:.2f},{loss:.4f},{end-start:.2f}")
 
     # Sortowanie: najpierw jakość, potem czas
     best = sorted(results, key=lambda x: (x["loss"], x["time"]))[0]
@@ -59,6 +59,6 @@ def optimize_architecture():
     print(f" - Końcowy błąd (MSE): {best['loss']:.5f}")
     print(f" - Czas treningu: {best['time']:.2f} s")
 
-    return best
+#    return best
 
 optimize_architecture()

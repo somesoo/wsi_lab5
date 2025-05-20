@@ -47,3 +47,13 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+# Najlepsza konfiguracja:
+#  - Ilośc epok: 19500
+#  - Learning rate: 0.7
+#  - Liczba warstw: 5
+#  - Neuronów w każdej warstwie: 100
+#  - Końcowy błąd (MSE): 0.01255
+#  - Czas treningu: 14.64 s
