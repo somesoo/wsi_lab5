@@ -5,6 +5,9 @@ from neuron_network.optimizer import SGD
 from neuron_network.loss import mse
 import numpy as np
 import matplotlib.pyplot as plt
+from regresja import run_regression_baseline
+from adam import run_adam_optimization
+
 
 def main():
     np.random.seed(CONFIG["seed"])
@@ -42,7 +45,30 @@ def main():
     plt.grid(True)
     plt.show()
 
-    pass
+    # === MODELE DO PORÓWNANIA ===
+    y_poly, loss_poly = run_regression_baseline(X, y)
+    model_adam = MLP(layer_sizes, activation=CONFIG["activation"])
+    y_adam, loss_adam = run_adam_optimization(model_adam, X, y, maxiter=CONFIG["epochs"])
+
+    print(f"Regresja (baseline) MSE: {loss_poly:.5f}")
+    print(f"MLP + ADAM MSE: {loss_adam:.5f}")
+
+    # === WYKRES PORÓWNAWCZY ===
+    y_poly = y_poly.flatten()
+    y_adam = y_adam.flatten()
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_vals, true_vals, label="f(x) – funkcja rzeczywista", color="black")
+    plt.plot(x_vals, pred_vals, label="MLP (SGD)", linestyle="--")
+    plt.plot(x_vals, y_adam[sorted_idx], label="MLP (ADAM)", linestyle="-.")
+    plt.plot(x_vals, y_poly[sorted_idx], label="Regresja wielomianowa", linestyle=":")
+    plt.title("Porównanie modeli aproksymujących")
+    plt.xlabel("x")
+    plt.ylabel("f(x)")
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
 
 
 if __name__ == "__main__":
