@@ -48,12 +48,13 @@ def optimize_architecture():
                         "time": end - start
                     })
 
-                    print(f"{num_layers} warstw × {neurons} neurony | LR={lr:.2f} -> Loss={loss:.4f}, Time={end-start:.2f}s")
+                    print(f"{epo} epok, {num_layers} warstw × {neurons} neurony | LR={lr:.2f} -> Loss={loss:.4f}, Time={end-start:.2f}s")
 
     # Sortowanie: najpierw jakość, potem czas
     best = sorted(results, key=lambda x: (x["loss"], x["time"]))[0]
 
     print("\nNajlepsza konfiguracja:")
+    print(f" - Ilośc epok: {best['epoch']}")
     print(f" - Learning rate: {best['learning_rate']}")
     print(f" - Liczba warstw: {best['layers']}")
     print(f" - Neuronów w każdej warstwie: {best['neurons']}")
