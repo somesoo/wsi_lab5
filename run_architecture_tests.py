@@ -29,26 +29,24 @@ def optimize_architecture():
                 model = MLP([1] + hidden_layers + [1], activation="tanh")
                 optimizer = SGD(learning_rate=lr)
                 epochs = 20000
-                for epo in range(500, epochs, 500):
-                    start = time.time()
-                    for epoch in range(epo):  # ustalona liczba epok
-                        y_pred = model.forward(X)
-                        loss = mse(y, y_pred)
-                        grad = mse_derivative(y, y_pred)
-                        model.backward(grad)
-                        optimizer.step(model.layers)
+                start = time.time()
+                for epoch in range(epochs):  # ustalona liczba epok
+                    y_pred = model.forward(X)
+                    loss = mse(y, y_pred)
+                    grad = mse_derivative(y, y_pred)
+                    model.backward(grad)
+                    optimizer.step(model.layers)
                     end = time.time()
-
-                    results.append({
-                        "epoch": epo,
-                        "learning_rate": lr,
-                        "layers": num_layers,
-                        "neurons": neurons,
-                        "loss": loss,
-                        "time": end - start
-                    })
-
-                    print(f"{epo} epok, {num_layers} warstw × {neurons} neurony | LR={lr:.2f} -> Loss={loss:.4f}, Time={end-start:.2f}s")
+                    if epoch % 500 == 0:
+                        results.append({
+                            "epoch": epoch,
+                            "learning_rate": lr,
+                            "layers": num_layers,
+                            "neurons": neurons,
+                            "loss": loss,
+                            "time": end - start
+                            })
+                        print(f"{epoch} epok, {num_layers} warstw × {neurons} neurony | LR={lr:.2f} -> Loss={loss:.4f}, Time={end-start:.2f}s")
 
     # Sortowanie: najpierw jakość, potem czas
     best = sorted(results, key=lambda x: (x["loss"], x["time"]))[0]
