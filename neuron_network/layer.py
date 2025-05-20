@@ -38,6 +38,9 @@ class Layer:
 
         self.dweights = dw
         self.dbiases = db
+        self.dw = self.dweights
+        self.db = self.dbiases
+
 #        print("dz mean:", np.mean(np.abs(dz)))
 #        print("dw mean:", np.mean(np.abs(dw)))
 
